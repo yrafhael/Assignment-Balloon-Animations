@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // event listener for check/uncheck
   document.getElementById('checkbox-card').addEventListener('change', function (e) {
-    if (e.target.classList.contains('form-check-input')) {
+    if (e.target.classList.contains('form-check-input') && e.target.id !== 'selectAll') {
       const elem = document.getElementById(e.target.id + 'Img');
       elem.style.visibility = "visible";
       elem.classList.remove("animate__animated", "animate__bounceInDown", "animate__bounceOutUp");
@@ -55,6 +55,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Select All functionality
+  const selectAllCheckbox = document.getElementById('selectAll');
+  selectAllCheckbox.addEventListener('change', function () {
+    const allBalloonCheckboxes = document.querySelectorAll('#checkbox-card .form-check-input:not(#selectAll)');
+
+    // Check or uncheck all balloon checkboxes based on "Select All"
+    allBalloonCheckboxes.forEach(checkbox => checkbox.checked = selectAllCheckbox.checked);
+
+    // Trigger change event manually to show/hide balloons
+    allBalloonCheckboxes.forEach(checkbox => {
+      const event = new Event('change');
+      checkbox.dispatchEvent(event);
+    });
+  });
 });
 
 
