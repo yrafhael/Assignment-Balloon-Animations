@@ -69,6 +69,31 @@ document.addEventListener("DOMContentLoaded", function () {
       checkbox.dispatchEvent(event);
     });
   });
+
+  // Hover effect for changing h1 color based on the balloon label
+  const greetingText = document.querySelector('.greeting');
+
+  const labelColorMap = {
+    'red': 'red',
+    'green': 'green',
+    'yellow': 'yellow'
+  };
+
+  // Add event listeners to all checkbox labels
+  document.querySelectorAll('#checkbox-card label').forEach(label => {
+    label.addEventListener('mouseover', function () {
+      const labelFor = label.getAttribute('for');
+      // Change color to balloon color
+      if (labelColorMap[labelFor]) {
+        greetingText.style.color = labelColorMap[labelFor];
+      }
+    });
+
+    // Reset to original color
+    label.addEventListener('mouseout', function () {
+      greetingText.style.color = 'slategray';
+    });
+  });
 });
 
 
