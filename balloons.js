@@ -39,6 +39,22 @@ document.addEventListener("DOMContentLoaded", function () {
   greeting.classList.remove('animate__heartBeat');
   // Add the random animation
   greeting.classList.add(randomAnimation);
+
+
+
+  // Submit button event listener
+  document.getElementById('submit').addEventListener('click', function () {
+    // Check if any balloons are selected
+    const balloonsSelected = document.querySelectorAll('.form-check-input:checked').length > 0;
+
+    if (!balloonsSelected) {
+      // Show the toast if no balloons are selected
+      const toastElement = document.getElementById('noBalloonToast');
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    }
+  });
+
 });
 
 

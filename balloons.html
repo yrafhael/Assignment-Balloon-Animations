@@ -23,18 +23,60 @@
     font-size: 3.5em;
     display: inline-block;
   }
+
   body {
     font-family: 'Questrial';
   }
+
   .ball {
-      visibility: hidden;
-    }
+    visibility: hidden;
+  }
+
+  /* Custom styles for the toast */
+  .toast-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 11;
+  }
+
+  .toast {
+    background-color: #ffc107;
+    border-radius: 10px;
+    padding: 1rem;
+    color: #000;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .toast .toast-body {
+    font-size: 1.1rem;
+  }
+
+  .toast .btn-close {
+    margin-left: 10px;
+    color: black;
+  }
+
 </style>
 <!-- custom js -->
 <script src="balloons.js"></script>
 </head>
 <body>
 <!-- content -->
+
+<!-- Toast for no balloon selection -->
+<div class="toast-container">
+  <div id="noBalloonToast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Select at least one balloon!
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+
 <div class="container">
   <h1 class="greeting animate__animated animate__heartBeat">Happy Birthday!</h1><hr />
     <form role="form">
