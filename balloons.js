@@ -1,15 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
   const elem = document.getElementById('dob');
   const datepicker = new Datepicker(elem, {
-    // options
     autohide: true,
     format: 'MM-dd'
   });
 
-  // uncheck all boxes by default (Firefox)
+  // Uncheck all boxes by default (Firefox)
   document.querySelectorAll('.form-check-input').forEach(c => c.checked = false);
 
-  // event listener for check/uncheck
+  // Event listener for check/uncheck
   document.getElementById('checkbox-card').addEventListener('change', function (e) {
     if (e.target.classList.contains('form-check-input') && e.target.id !== 'selectAll') {
       const elem = document.getElementById(e.target.id + 'Img');
@@ -21,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // List of animate.css attention seeker classes
+  // Randomly select an animation class
   const attentionSeekers = [
     'animate__bounce', 'animate__flash', 'animate__pulse',
     'animate__rubberBand', 'animate__shakeX', 'animate__shakeY',
@@ -29,26 +28,16 @@ document.addEventListener("DOMContentLoaded", function () {
     'animate__wobble', 'animate__jello', 'animate__heartBeat'
   ];
 
-  // Randomly select an animation class
   const randomAnimation = attentionSeekers[Math.floor(Math.random() * attentionSeekers.length)];
-
-  // Apply the random animation to the greeting
   const greeting = document.querySelector('.greeting');
-
-  // Remove the default animation
   greeting.classList.remove('animate__heartBeat');
-  // Add the random animation
   greeting.classList.add(randomAnimation);
-
-
 
   // Submit button event listener
   document.getElementById('submit').addEventListener('click', function () {
-    // Check if any balloons are selected
     const balloonsSelected = document.querySelectorAll('.form-check-input:checked').length > 0;
 
     if (!balloonsSelected) {
-      // Show the toast if no balloons are selected
       const toastElement = document.getElementById('noBalloonToast');
       const toast = new bootstrap.Toast(toastElement);
       toast.show();
@@ -61,41 +50,41 @@ document.addEventListener("DOMContentLoaded", function () {
     const allBalloonCheckboxes = document.querySelectorAll('#checkbox-card .form-check-input:not(#selectAll)');
 
     // Check or uncheck all balloon checkboxes based on "Select All"
-    allBalloonCheckboxes.forEach(checkbox => checkbox.checked = selectAllCheckbox.checked);
-
-    // Trigger change event manually to show/hide balloons
     allBalloonCheckboxes.forEach(checkbox => {
-      const event = new Event('change');
-      checkbox.dispatchEvent(event);
+      checkbox.checked = selectAllCheckbox.checked;
+      const balloonImage = document.getElementById(checkbox.id + 'Img');
+      if (selectAllCheckbox.checked) {
+        balloonImage.style.visibility = 'visible';
+        balloonImage.classList.add("animate__animated", "animate__bounceInDown");
+        balloonImage.classList.remove("animate__bounceOutUp");
+      } else {
+        balloonImage.classList.add("animate__animated", "animate__bounceOutUp");
+        balloonImage.classList.remove("animate__bounceInDown");
+        setTimeout(() => {
+          balloonImage.style.visibility = 'hidden';
+        }, 1000); // Wait for the animation to finish before hiding
+      }
     });
   });
 
   // Hover effect for changing h1 color based on the balloon label
   const greetingText = document.querySelector('.greeting');
-
   const labelColorMap = {
     'red': 'red',
     'green': 'green',
-    'yellow': 'yellow'
+    'blue': 'blue'
   };
 
-  // Add event listeners to all checkbox labels
   document.querySelectorAll('#checkbox-card label').forEach(label => {
     label.addEventListener('mouseover', function () {
       const labelFor = label.getAttribute('for');
-      // Change color to balloon color
       if (labelColorMap[labelFor]) {
         greetingText.style.color = labelColorMap[labelFor];
       }
     });
 
-    // Reset to original color
     label.addEventListener('mouseout', function () {
       greetingText.style.color = 'slategray';
     });
   });
 });
-
-
-
-
